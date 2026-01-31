@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-demo-config
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Welcome to Nginx Demo</title>
+    </head>
+    <body>
+        <h1>🎉 Hello from Nginx Demo!</h1>
+        <p>This app is deployed by <strong>ArgoCD</strong></p>
+        <p>Version: <strong>1.0</strong></p>
+    </body>
+    </html>
