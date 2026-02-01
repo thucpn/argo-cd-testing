@@ -12,6 +12,13 @@ patches:
     - op: replace
       path: /spec/replicas
       value: 1
+- target:
+    kind: Ingress
+    name: nginx-multi-env
+  patch: |-
+    - op: replace
+      path: /spec/rules/0/host
+      value: nginx-dev.local
 
 nameSuffix: "-dev"
 labels:
