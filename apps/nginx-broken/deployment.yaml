@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-broken
+  labels:
+    app: nginx-broken
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx-broken
+  template:
+    metadata:
+      labels:
+        app: nginx-broken
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:invalid-tag  # ❌ Image không tồn tại
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "1Gi"  # ❌ Request quá cao
+            cpu: "2000m"
+          limits:
+            memory: "2Gi"
+            cpu: "4000m"
+        livenessProbe:
+          httpGet:
+            path: /healthz  # ❌ Path không tồn tại
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
