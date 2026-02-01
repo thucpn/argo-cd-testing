@@ -24,3 +24,27 @@ spec:
           limits:
             memory: "128Mi"
             cpu: "200m"
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        volumeMounts:
+        - name: html
+          mountPath: /usr/share/nginx/html
+        lifecycle:
+          postStart:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - |
+                sed -i "s/Loading.../$POD_NAME ($POD_IP)/" /usr/share/nginx/html/index.html
+      volumes:
+      - name: html
+        configMap:
+          name: nginx-multi-env-html

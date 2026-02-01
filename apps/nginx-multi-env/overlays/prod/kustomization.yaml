@@ -19,6 +19,64 @@ patches:
     - op: replace
       path: /spec/rules/0/host
       value: nginx-prod.local
+- target:
+    kind: ConfigMap
+    name: nginx-multi-env-html
+  patch: |-
+    - op: replace
+      path: /data/index.html
+      value: |
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Nginx Multi-Env - PRODUCTION</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100vh;
+                    margin: 0;
+                    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+                    color: white;
+                }
+                .container {
+                    text-align: center;
+                    background: rgba(255, 255, 255, 0.1);
+                    padding: 50px;
+                    border-radius: 20px;
+                    backdrop-filter: blur(10px);
+                }
+                .pod-name {
+                    font-size: 24px;
+                    font-weight: bold;
+                    color: #ffd700;
+                    margin: 20px 0;
+                    padding: 10px;
+                    background: rgba(0, 0, 0, 0.3);
+                    border-radius: 10px;
+                }
+                .env {
+                    font-size: 18px;
+                    margin: 10px 0;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>🚀 Nginx Multi-Environment</h1>
+                <p class="env">Environment: <strong>PRODUCTION</strong></p>
+                <div class="pod-name">
+                    Pod: <span id="hostname">Loading...</span>
+                </div>
+                <p>Deployed by ArgoCD + Kustomize</p>
+                <p style="margin-top: 20px; font-size: 14px;">
+                    💡 Refresh page nhiều lần để thấy load balancing!
+                </p>
+            </div>
+        </body>
+        </html>
 
 nameSuffix: "-prod"
 labels:
